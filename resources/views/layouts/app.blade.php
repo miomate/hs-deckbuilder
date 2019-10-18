@@ -12,6 +12,10 @@
       
     </head>
     <body>
-      @yield('content')
+      @include('inc.navbar')
+      <div class="container-fluid">
+        @yield('content')
+      </div>
+      <script src="/js/app.js"></script> 
     </body>
 </html>
