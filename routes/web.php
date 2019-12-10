@@ -22,6 +22,5 @@
 
 Route::get('/', 'PagesController@index');
 Route::get('/cards', 'PagesController@cards');
+Route::post('/cards', 'PagesController@filter');
 Route::get('/about', 'PagesController@about');
-
-

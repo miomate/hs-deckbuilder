@@ -1,4 +1,4 @@
-# Card deck builder ![badge]
+# Card Deck Builder ![badge]
 
 <img src="x_github/dbuilder.png" align="right"
      title="imgage slider" width="163" height="178">
@@ -6,6 +6,8 @@
 Provides cards from the card game Hearthstone and allows to build and export a deck.
 
 [badge]: https://img.shields.io/badge/status-in%20development-orange
+
+![](x_github/preview.gif)
 
 ### Features
 

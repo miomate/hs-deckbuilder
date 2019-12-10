@@ -1,1 +1,109 @@
 npm run lint:fix
+
+old version of PagesController.php :
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Cards;
+
+class PagesController extends Controller
+{
+
+  public function index() {
+    // return 'PagesController index()';
+    $title = 'this title is in pagescontroller.php and exportet through return vie(..., compact("title")';
+    return view('pages.index', compact('title'));
+    // return view('pages.index')->with('title', $title); //second methode
+  }
+
+    /**
+     * Cards...
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+ 
+
+         
+    public function cards(Request $request) {
+      $cards = Cards::all();
+
+      return view('pages.cards', ['cards' => $cards]);
+    }
+
+    /**
+     * Cards...
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+
+
+   
+
+    public function filter(Request $request) {
+      
+
+      function var_dump_pre($mixed = null) {
+        echo '<pre>';
+        var_dump($mixed);
+        echo '</pre>';
+        return null;
+      }
+
+
+      $category = $request->input('category');
+      $class = $request->input('class');
+      $mana = $request->input('mana');
+      $search = $request->input('search');
+
+      var_dump_pre($class);
+
+      if ($class !== null) {
+        $wheres['playerClass'] = $class;
+      }
+      if ($mana !== null) {
+        $wheres['cost'] = $mana;
+      }
+      if ($search !== null) {
+        $wheres['name'] = $search;
+      }
+
+      $cardInstance = new Cards();
+      if (count($wheres) > 0) {
+        $cards = $cardInstance->where($wheres)->orderby('cost')->get();
+      } else {
+        $cards = $cardInstance->orderby('cost')->get();
+      }
+
+      $request->flash();
+      
+      return view('pages.cards', ['cards' => $cards]);
+    }
+
+    
+    public function about() {
+      return view('pages.about');
+    }
+  }
+
+
+  // public function filter(Request $request) {
+  //   $mana = $request->input('mana');
+
+  //   $cards = Cards::when($mana, function ($query, $mana) {
+    
+  //     echo "mana is " . $mana;
+  //        $x = $query->where('cost', $mana);
+  //       //  echo "xx " . $x;
+  //        return $x;
+     
+        
+  //      })
+  //     ->orderby('cost')
+  //     ->get();
+
+  //   $request->flash();
