@@ -12,10 +12,10 @@ class PagesController extends Controller
 {
 
   public function index() {
-    // return 'PagesController index()';
+     return 'PagesController index()';
     $title = 'this title is in pagescontroller.php and exportet through return vie(..., compact("title")';
     return view('pages.index', compact('title'));
-    // return view('pages.index')->with('title', $title); //second methode
+     return view('pages.index')->with('title', $title); second methode
   }
 
     /**
@@ -91,19 +91,19 @@ class PagesController extends Controller
   }
 
 
-  // public function filter(Request $request) {
-  //   $mana = $request->input('mana');
+   public function filter(Request $request) {
+     $mana = $request->input('mana');
 
-  //   $cards = Cards::when($mana, function ($query, $mana) {
+     $cards = Cards::when($mana, function ($query, $mana) {
     
-  //     echo "mana is " . $mana;
-  //        $x = $query->where('cost', $mana);
-  //       //  echo "xx " . $x;
-  //        return $x;
+       echo "mana is " . $mana;
+          $x = $query->where('cost', $mana);
+           echo "xx " . $x;
+          return $x;
      
         
-  //      })
-  //     ->orderby('cost')
-  //     ->get();
+        })
+       ->orderby('cost')
+       ->get();
 
-  //   $request->flash();
+     $request->flash();

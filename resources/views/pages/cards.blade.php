@@ -5,11 +5,11 @@
 
   {{ Form::open(['action' => 'PagesController@filter', 'method' => 'POST', 'class'=> 'form-inline mb-5']) }} 
     <div class="form-group  mr-sm-2">
-      {{Form::select('category', ['standard' => 'Standard', 'wild' => 'Wild',], null, ['class'=> 'browser-default custom-select', 'onchange' => 'this.form.submit()'])}}
+      {{ Form::select('category', ['standard' => 'Standard', 'wild' => 'Wild',], null, ['class'=> 'browser-default custom-select', 'placeholder' => 'All Categories', 'onchange' => 'this.form.submit()']) }}
     </div>
 
     <div class="form-group  mr-sm-2">
-      {{Form::select('class', [ 
+      {{ Form::select('class', [ 
         'DRUID' => 'Druid', 
         'HUNTER' => 'Hunter', 
         'MAGE' => 'Mage', 
@@ -19,11 +19,12 @@
         'SHAMAN' => 'Shaman', 
         'WARLOCK' => 'Warlock', 
         'WARRIOR' => 'Warrior'],
-        null, ['class'=> 'browser-default custom-select', 'placeholder' => 'All Classes', 'onchange' => 'this.form.submit()'])}}
+        null, ['class'=> 'browser-default custom-select', 'placeholder' => 'All Classes', 'onchange' => 'this.form.submit()']) }}
     </div>
 
     <div class="form-group  mr-sm-2">
-        {{Form::select('mana', [
+        {{ Form::select('mana', [
+          'All' => 'All',
           '0' => '0',
           '1' => '1', 
           '2' => '2', 
@@ -37,21 +38,21 @@
           '10' => '10',
           '50' => '50',
           '11' => '+11'],
-          null, ['class'=> 'browser-default custom-select', 'placeholder' => 'All', 'onchange' => 'this.form.submit()'])}}
+          null, ['class'=> 'browser-default custom-select', 'onchange' => 'this.form.submit()']) }}
       </div>
 
 
     <div class="form-group mr-sm-2">
-      {{Form::text('search', '', ['class'=> 'form-control', 'placeholder' => 'Search'])}}
+      {{ Form::open(['action' => 'PagesController@filter', 'method' => 'POST', 'class'=> 'form-inline mb-5']) }} 
+      {{ Form::text('search', '', ['class'=> 'form-control', 'placeholder' => 'Search']) }}
     </div>
     
     <div class="form-group">
-      {{-- {{Form::submit('Click Me!','xxx','',['class'=> 'btn btn-outline-success mr-2','onchange' => 'this.form.submit()'])}} --}}
-      <button class="btn btn-outline-success mr-2" type="submit">Go</button>
+      <button class="btn btn-outline-success" type="submit">Go</button>
     </div>
   {{ Form::close() }}
-  <h1>Cards</h1>
 
+  <h1>Cards</h1>
   <div class="row">
     <div class="col-sm-8">
       @foreach ($cards->chunk(3) as $chunk)
@@ -59,44 +60,35 @@
       <div class="card-deck">
         @foreach($chunk as $card)
         <div class="card">
-          <div class="card-body" id="card-body">
-            <h5 class="card-title" id="h5">{!! $card->name !!}</h5>
-            <p class="card-text" id="p">{!! $card->text !!}</p>
-            <p class="card-cost" id="p">{!! $card->cost !!}</p>
-            <p class="card-cost" id="p">{!! $card->playerClass !!}</p>
-            <a href="#" class="stretched-link"></a>
+          <div class="card-body" id="card-body" > 
+            <?php  
+            $linkStart='https://art.hearthstonejson.com/v1/render/latest/enUS/512x/';
+            $finalLink = $linkStart . $card->card_id . '.png'
+            ?>
+            <img class="cardPng" src="{{$finalLink}}" loading="lazy" alt="">
+          <a href="#" id="{!! $card->card_id !!}" class="stretched-link"></a> 
           </div>
-        </div></b></b></b> <!-- because SQL db data has some open b tags but missing some closing b tags-->
+        </div></b></b></b> 
         @endforeach
       </div>
       @endforeach
     </div>
-    <div class="col-sm-4">show selected cards</div>
-  </div>
 
+    <div class="col-sm-4">
+        <div class="input-group mb-3">
+          <div class="form-group mr-2">
+            <input class="form-control" type="text" placeholder="Deck name">
+          </div>       
+          <div class="form-group">
+            <button class="btn btn-outline-success" type="submit">Create Deck</button>
+          </div>
+        </div>
+        <div style="widht:max; height:100px; background-color:red;"></div>
+    </div>
+  </div>
 </div>
 <!--container-fluid-->
-
-<script>
-  function getID(event) {
-    //onclick="getID(event)" on a tag
-    //onclick="getID(this)" on a tag
-    // var x = event.target
-    // var x = event.target.id;
-    // var x = event.target.parentNode.parentNode.id;
-    var x = event.target.id;
-    // var x = event.target.getAttribute('data-card-id')
-    if (x === 'p' || x === 'h5') {
-      console.log('ppp')
-      var x = event.target.parentNode.parentNode.id;
-    } else if (x === 'card-body') {
-      console.log('card-body')
-    }
-
-
-
-    console.log(x)
-  }
-</script>
-
 @endsection
+
+
+

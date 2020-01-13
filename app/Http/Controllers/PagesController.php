@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Decks;
 use App\Cards;
 
 class PagesController extends Controller {

@@ -4737,6 +4737,10 @@ input[type=button].btn-block {
 .navbar-dark .navbar-text a:focus {
   color: #fff;
 }
+.cardPng {
+  height: 300px;
+  width: auto;
+}
 
 .card {
   position: relative;
@@ -4744,10 +4748,10 @@ input[type=button].btn-block {
   flex-direction: column;
   min-width: 0;
   word-wrap: break-word;
-  background-color: #fff;
+  /* background-color: #fff;
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.25rem;
+  border-radius: 0.25rem; */
 }
 
 .card > hr {
@@ -4766,8 +4770,8 @@ input[type=button].btn-block {
 }
 
 .card-body {
-  flex: 1 1 auto;
-  padding: 1.25rem;
+  /* flex: 1 1 auto;
+  padding: 1.25rem; */
 }
 
 .card-title {
