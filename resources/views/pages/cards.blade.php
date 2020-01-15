@@ -43,16 +43,13 @@
 
 
     <div class="form-group mr-sm-2">
-      {{ Form::open(['action' => 'PagesController@filter', 'method' => 'POST', 'class'=> 'form-inline mb-5']) }} 
       {{ Form::text('search', '', ['class'=> 'form-control', 'placeholder' => 'Search']) }}
     </div>
     
     <div class="form-group">
       <button class="btn btn-outline-success" type="submit">Go</button>
     </div>
-  {{ Form::close() }}
 
-  <h1>Cards</h1>
   <div class="row">
     <div class="col-sm-8">
       @foreach ($cards->chunk(3) as $chunk)
@@ -66,13 +63,16 @@
             $finalLink = $linkStart . $card->card_id . '.png'
             ?>
             <img class="cardPng" src="{{$finalLink}}" loading="lazy" alt="">
-          <a href="#" id="{!! $card->card_id !!}" class="stretched-link"></a> 
+            <button style="display: block; width:100%" type="submit" name="cardInput" value="{!! $card->card_id !!}">
+              Add
+            </button>
           </div>
         </div></b></b></b> 
         @endforeach
       </div>
       @endforeach
     </div>
+    {{ Form::close() }}
 
     <div class="col-sm-4">
         <div class="input-group mb-3">
@@ -83,11 +83,17 @@
             <button class="btn btn-outline-success" type="submit">Create Deck</button>
           </div>
         </div>
-        <div style="widht:max; height:100px; background-color:red;"></div>
+        <div>
+          @foreach ($tmpCards as $tmpCard)
+            <p>{{ $tmpCard->card }}</p>
+          @endforeach
+
+      
+        </div>
     </div>
-  </div>
-</div>
-<!--container-fluid-->
+  </div><!--div row-->
+</div><!--container-fluid-->
+
 @endsection
 
 
