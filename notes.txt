@@ -1,4 +1,6 @@
 --
+laravel var dump :     // dd($tmpCards);
+--
 backup of bad working clickable card  
           {{ Form::open(['action' => 'PagesController@filter', 'method' => 'POST']) }} 
             <input type="hidden" name="what you want" value="{!! $card->card_id !!}">

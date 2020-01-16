@@ -11,8 +11,10 @@ class PagesController extends Controller {
 
   public function cards(Request $request) {
 
-    $cards = Cards::all();
-    $tmpCards = TmpDecks::all();  
+    $cards = Cards::limit(10)->get();
+    $tmpCards = TmpDecks::with(['currentCard'])
+    ->limit(10)
+    ->get();
     return view('pages.cards', ['cards' => $cards, 'tmpCards' => $tmpCards]);
   }  
   
@@ -26,7 +28,7 @@ class PagesController extends Controller {
     
     if($tmpCard) {
       $TmpDecks = new TmpDecks;
-      $TmpDecks->card = $tmpCard;
+      $TmpDecks->card_id = $tmpCard;
       $TmpDecks->save();
     }
     
@@ -41,8 +43,8 @@ class PagesController extends Controller {
     ->get();
     $request->flash();
 
-    $tmpCards = TmpDecks::all();   
-    
+    $tmpCards = TmpDecks::all();
+        
     return view('pages.cards', ['cards' => $cards, 'tmpCards' => $tmpCards]);
   }
 

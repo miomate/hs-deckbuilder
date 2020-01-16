@@ -63,7 +63,7 @@
             $finalLink = $linkStart . $card->card_id . '.png'
             ?>
             <img class="cardPng" src="{{$finalLink}}" loading="lazy" alt="">
-            <button style="display: block; width:100%" type="submit" name="cardInput" value="{!! $card->card_id !!}">
+            <button style="display: block; width:100%" type="submit" name="cardInput" value="{!! $card->id !!}">
               Add
             </button>
           </div>
@@ -85,7 +85,16 @@
         </div>
         <div>
           @foreach ($tmpCards as $tmpCard)
-            <p>{{ $tmpCard->card }}</p>
+          {{-- {{dd($tmpCard->currentCard)}} --}}
+            <p>{{ $tmpCard->card_id }}</p>
+            @isset ($tmpCard )
+          
+            @foreach($tmpCard->currentCard as $items)          
+            <p>{{ $items->playerClass }}</p>
+
+            @endforeach
+            @endisset
+            <p>{{ $tmpCard->playerClass }}</p>
           @endforeach
 
       
