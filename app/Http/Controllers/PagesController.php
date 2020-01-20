@@ -8,17 +8,8 @@ use App\Cards;
 use App\TmpDecks;
 
 class PagesController extends Controller {
-
-  public function cards(Request $request) {
-
-    $cards = Cards::limit(10)->get();
-    $tmpCards = TmpDecks::with(['currentCard'])
-    ->limit(10)
-    ->get();
-    return view('pages.cards', ['cards' => $cards, 'tmpCards' => $tmpCards]);
-  }  
   
-  public function filter(Request $request) { 
+  public function cards(Request $request) { 
     
     $tmpCard = $request->input('cardInput');
     $category = $request->input('category');
@@ -35,15 +26,19 @@ class PagesController extends Controller {
     $cards = Cards::when($mana, function($query, $mana) {
       return $query->where('cost', $mana); 
     }) 
-
     ->when( $class, function($query,  $class) {
       return $query->where('playerClass',  $class);
     })
     ->orderby('cost')
+    ->limit(1000)
     ->get();
+    
     $request->flash();
 
-    $tmpCards = TmpDecks::all();
+    $tmpCards = TmpDecks::with(['currentCard'])
+    ->limit(10)
+    ->get()
+    ->groupBy('card_id');
         
     return view('pages.cards', ['cards' => $cards, 'tmpCards' => $tmpCards]);
   }

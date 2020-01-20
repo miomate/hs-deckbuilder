@@ -1,0 +1,52 @@
+SELECT Orders.OrderID, Customers.CustomerName, Orders.OrderDate
+FROM Orders
+INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;
+
+
+
+
+
+
+
+
+
+
+
+<div class="row">
+    <div class="col-sm-8">
+      foreach
+      <div class="tmp-deck-cards">
+        foreach
+      </div>
+    </div>
+</div>
+
+
+@foreach ($tmpCards as $tmpCard)
+          
+@isset ($tmpCard )
+
+@foreach($tmpCard->currentCard as $items)          
+<p>{{ $items->playerClass }}</p>
+<p>{{ $items->card_id }}</p>
+<?php  
+$linkTmpDeck = $linkStart . $items->card_id . '.png'
+?>
+<img class="cardPng" src="{{$linkTmpDeck}}" loading="lazy" alt="">
+
+
+ @endforeach
+@endisset
+<p>{{ $tmpCard->playerClass }}</p>
+@endforeach
+---
+.tmp-deck-cards {
+    width: 100%;
+    height: 50px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+    background-image: url(https://art.hearthstonejson.com/v1/render/latest/enUS/512x/AT_132.png);
+    background-position-x: center;
+    background-position-y: -145px;
+}
+---

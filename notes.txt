@@ -1,3 +1,10 @@
+
+
+  SELECT cards.card_id, cards.name, cards.playerClass, cards.cost
+    FROM cards
+    INNER JOIN tmp_decks ON cards.id=tmp_decks.card_id 
+    ORDER BY cards.cost
+
 --
 laravel var dump :     // dd($tmpCards);
 --
