@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Decks;
 use App\Cards;
 use App\TmpDecks;
+use DB;
 
 class PagesController extends Controller {
   
@@ -17,6 +18,8 @@ class PagesController extends Controller {
     $mana = $request->input('mana');
     $search = $request->input('search');
     
+  
+
     if($tmpCard) {
       $TmpDecks = new TmpDecks;
       $TmpDecks->card_id = $tmpCard;
@@ -32,14 +35,15 @@ class PagesController extends Controller {
     ->orderby('cost')
     ->limit(1000)
     ->get();
-    
+   
     $request->flash();
 
     $tmpCards = TmpDecks::with(['currentCard'])
-    ->limit(10)
+    ->limit(40)
     ->get()
     ->groupBy('card_id');
         
+
     return view('pages.cards', ['cards' => $cards, 'tmpCards' => $tmpCards]);
   }
 

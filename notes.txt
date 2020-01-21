@@ -1,5 +1,11 @@
+$x = DB::table('tmp_decks') //TmpDecks ?
+   ->select('tmp_decks.card_id',DB::raw('COUNT(card_id) as count'))
+   ->groupBy('card_id')
+   ->orderBy('count')
+   ->get();
 
-
+   return view('pages.cards', ['cards' => $cards, 'tmpCards' => $tmpCards, 'x' => $x]);
+----
   SELECT cards.card_id, cards.name, cards.playerClass, cards.cost
     FROM cards
     INNER JOIN tmp_decks ON cards.id=tmp_decks.card_id 
