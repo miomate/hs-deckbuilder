@@ -12,20 +12,36 @@ class PagesController extends Controller {
   
   public function cards(Request $request) { 
     
-    $tmpCard = $request->input('cardInput');
+    $cardId = $request->input('cardId');
+    $removeCardId = $request->input('removeCardId');
+    
+    echo $removeCardId;
     $category = $request->input('category');
     $class = $request->input('class');
     $mana = $request->input('mana');
     $search = $request->input('search');
+    $cardIds = TmpDecks::where('card_id', '=', $cardId)->get()->toArray();
     
-  
+    echo "card id_";
+    echo $removeCardId;
+    echo "_";
 
-    if($tmpCard) {
-      $TmpDecks = new TmpDecks;
-      $TmpDecks->card_id = $tmpCard;
+    // dd($removeCardId);
+    // count($cardId);
+    // gettype($cardId);
+    
+    
+    $TmpDecks = new TmpDecks;
+    if($cardId && count($cardIds) < 2) {
+      $TmpDecks->card_id = $cardId;
       $TmpDecks->save();
     }
     
+    if($removeCardId){
+      echo "echo in einem if?";
+      $TmpDecks->where('id', '=', $removeCardId)->delete();
+    }
+
     $cards = Cards::when($mana, function($query, $mana) {
       return $query->where('cost', $mana); 
     }) 
@@ -33,7 +49,7 @@ class PagesController extends Controller {
       return $query->where('playerClass',  $class);
     })
     ->orderby('cost')
-    ->limit(1000)
+    ->limit(3)
     ->get();
    
     $request->flash();
