@@ -14,33 +14,67 @@ class PagesController extends Controller {
     
     $cardId = $request->input('cardId');
     $removeCardId = $request->input('removeCardId');
-    
-    echo $removeCardId;
+    $addCardId = $request->input('addCardId');
+    $createDeck = $request->input('createDeck');
     $category = $request->input('category');
     $class = $request->input('class');
     $mana = $request->input('mana');
     $search = $request->input('search');
     $cardIds = TmpDecks::where('card_id', '=', $cardId)->get()->toArray();
     
-    echo "card id_";
+    // echo $request;
+    // echo $mana;
+    echo $search;
     echo $removeCardId;
-    echo "_";
+    echo $createDeck;
 
-    // dd($removeCardId);
+    // dd($);
     // count($cardId);
     // gettype($cardId);
+
+
     
-    
+    $countTmpDeckCards = TmpDecks::count();
+
+    $decks = new Decks;
+
     $TmpDecks = new TmpDecks;
-    if($cardId && count($cardIds) < 2) {
+    if($cardId && count($cardIds) < 2 && $countTmpDeckCards < 5) {
       $TmpDecks->card_id = $cardId;
       $TmpDecks->save();
     }
-    
+
+    if($createDeck){
+      $deckArray = array();
+      $decks->deck_name = $createDeck;
+      $decks->save();
+    }
+
     if($removeCardId){
-      echo "echo in einem if?";
       $TmpDecks->where('id', '=', $removeCardId)->delete();
     }
+  
+
+    if($addCardId){
+    // $TmpDecks = new TmpDecks;
+      
+      $TmpDeck = \App\TmpDecks::find($addCardId);
+      $TmpDeck->replicate()->save();
+  
+    }
+
+    
+
+
+
+    // $abc = $search;
+    $search = Cards::when($search, function($query, $search) {
+      return $query->where('name', 'LIKE', $search); 
+    }) 
+    ->get();
+    // "%{$search}%"
+    // ->toSql();
+    // dd($search);
 
     $cards = Cards::when($mana, function($query, $mana) {
       return $query->where('cost', $mana); 
@@ -49,9 +83,9 @@ class PagesController extends Controller {
       return $query->where('playerClass',  $class);
     })
     ->orderby('cost')
-    ->limit(3)
+    ->limit(10)
     ->get();
-   
+
     $request->flash();
 
     $tmpCards = TmpDecks::with(['currentCard'])
@@ -60,7 +94,7 @@ class PagesController extends Controller {
     ->groupBy('card_id');
         
 
-    return view('pages.cards', ['cards' => $cards, 'tmpCards' => $tmpCards]);
+    return view('pages.cards', ['cards' => $cards, 'tmpCards' => $tmpCards, 'countTmpDeckCards' => $countTmpDeckCards,  'search'  => $search]);
   }
 
   public function index() {
