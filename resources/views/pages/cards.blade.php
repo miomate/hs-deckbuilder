@@ -19,7 +19,7 @@
     -webkit-text-stroke: 2px black;
   }
 
-  #removeCardBtn {
+  .btnNoStyle {
     background: none;
     color: inherit;
     border: none;
@@ -90,7 +90,7 @@
       '11' => '+11'],
       null, ['class'=> 'browser-default custom-select', 'onchange' => 'this.form.submit()']) }}
   </div> <!-- ui -->
-<!-- TODO: limit amount card ins tmpDeck to 30, css red color?-->
+  <!-- TODO: limit amount card ins tmpDeck to 30, css red color?-->
   <div class="form-group mr-sm-2 ">
     {{ Form::text('search', '', ['class'=> 'form-control', 'placeholder' => 'Search']) }}
   </div>
@@ -106,7 +106,8 @@
     <!--cards, left'n right side of screen-->
 
     <div class="col-sm-8">
-      @foreach ($cards->chunk(3) as $chunk) <!--switch cases if chunk length 1 or 2, descrease width of last card, add button wdith whole page-->
+      @foreach ($cards->chunk(3) as $chunk)
+      <!--switch cases if chunk length 1 or 2, descrease width of last card, add button wdith whole page-->
       <div class="card-deck">
         @foreach($chunk as $card)
         <div class="card">
@@ -139,7 +140,7 @@
             {{ Form::text('createDeck', '', ['class'=> 'form-control', 'placeholder' => 'Deck Name']) }}
           </div>
           <div class="form-group">
-            <button class="btn btn-outline-success" style="background-color:white" type="submit" >Create Deck</button>
+            <button class="btn btn-outline-success" style="background-color:white" type="submit">Create Deck</button>
             {{ Form::close() }}
           </div>
         </div>
@@ -154,22 +155,33 @@
 
             <span class="ml-2 mr-2 manaIcon">{{ $group[0]->currentCard[0]->cost }}</span>
             <div class="tmpDeckPreview">
-                <p>{{ $group[0]->currentCard[0]->name }}</p>
-                <p>{{ $group[0]->currentCard[0]->count }}</p>
-                <p class="ml-2 mr-2">{{count($group)}}/2</p>
-    
-                {{ Form::open(['action' => 'PagesController@cards', 'method' => 'POST']) }}
-                <button id="removeCardBtn" type="submit" name="removeCardId" value="{!! $group[0]->id !!}">-</button>
-                <button id="addCardBtn" type="submit" name="addCardId" value="{!! $group[0]->id !!}">+</button>
-                {{ Form::close() }}
+              <p>{{ $group[0]->currentCard[0]->name }}</p>
+              <p>{{ $group[0]->currentCard[0]->count }}</p>
+              <p class="ml-2 mr-2">{{$group[0]->count}}/2</p>
+
+              {{ Form::open(['action' => 'PagesController@cards', 'method' => 'POST']) }}
+              <button class="btnNoStyle" id="removeCardBtn" type="submit" name="removeCardId"
+                value="{!! $group[0]->id !!}">-</button>
+              <button class="btnNoStyle" id="addCardBtn" type="submit" name="addCardId"
+                value="{!! $group[0]->id !!}">+</button>
+              {{ Form::close() }}
             </div>
-            
+
           </div>
         </div>
         @endforeach
         {{ Form::close() }}
-      <p>{{$countTmpDeckCards}}/5</p>
+        <p>{{$tmpCards->count()}}/5</p>
       </div>
+
+      <h2>All decks</h2>
+      @foreach ($decks as $deck)
+      <ul class="list-group">
+        <a href="{{route('deck.show', ['deck' => $deck->id])}}">
+          <li class="list-group-item">{{$deck->deck_name}}</li>
+        </a>
+      </ul>
+      @endforeach
     </div>
 
   </div>
@@ -178,4 +190,3 @@
 <!--container-fluid-->
 
 @endsection
-

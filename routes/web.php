@@ -25,5 +25,7 @@ Route::get('/cards', 'PagesController@cards');
 Route::post('/cards', 'PagesController@cards');
 // Route::get('/TmpDecks', 'PagesController@TmpDecks');
 Route::get('/about', 'PagesController@about');
+Route::get('/about', 'PagesController@about');
+Route::get('/deck/{deck}', 'PagesController@showDeck')->name('deck.show');
 
 
