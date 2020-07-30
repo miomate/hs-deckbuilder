@@ -22,3 +22,6 @@ Provides cards from the card game Hearthstone and allows to build and export a d
 
 ### Preview
 <img src="https://i.imgur.com/sH5E2re.jpg" width="400" height="200">
+
+### DB
+drive google com/drive/folders/1eATVM85ijA3qEYRzQmwwEdXhClWjIX1C?usp=sharing
