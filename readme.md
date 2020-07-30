@@ -5,8 +5,7 @@
 
 Provides cards from the card game Hearthstone and allows to build and export a deck.
 
-[badge]: https://img.shields.io/badge/status-in%20development-orange
-
+[badge]: https://img.shields.io/badge/status-stable-green.svg
 ![](x_github/preview.gif)
 
 ### Features
