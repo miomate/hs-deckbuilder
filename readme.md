@@ -19,3 +19,6 @@ Provides cards from the card game Hearthstone and allows to build and export a d
 - Laravel
 - SQL
 - XAMPP
+
+### Preview
+<img src="https://i.imgur.com/sH5E2re.jpg" width="400" height="200">
